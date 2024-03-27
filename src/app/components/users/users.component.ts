@@ -30,5 +30,6 @@ export class UsersComponent implements OnInit{
 
   getUserIdEvent(id: number) {
     this.userId=id
+    console.log(this.userId)
   }
 }
