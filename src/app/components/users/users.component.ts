@@ -4,6 +4,8 @@ import {IUser} from "../../interfaces/user.interface";
 import {UserComponent} from "../user/user.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {PostsComponent} from "../posts/posts.component";
+import {IPost} from "../../interfaces/post.interface";
+import {PostComponent} from "../post/post.component";
 
 @Component({
   selector: 'app-users',
@@ -12,7 +14,8 @@ import {PostsComponent} from "../posts/posts.component";
     UserComponent,
     NgForOf,
     PostsComponent,
-    NgIf
+    NgIf,
+    PostComponent
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
@@ -20,6 +23,7 @@ import {PostsComponent} from "../posts/posts.component";
 export class UsersComponent implements OnInit{
   users: IUser[]
   userId: number
+  posts: IPost[]
 
   constructor(private userService:UserService) {
   }
@@ -30,6 +34,6 @@ export class UsersComponent implements OnInit{
 
   getUserIdEvent(id: number) {
     this.userId=id
-    console.log(this.userId)
+    this.userService.getPosts(this.userId).subscribe(value =>this.posts=value)
   }
 }
