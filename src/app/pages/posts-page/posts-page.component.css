@@ -1,0 +1,6 @@
+.containerPosts{
+  display: flex;
+}
+.containerPosts div{
+  width: 50%;
+}
