@@ -33,7 +33,7 @@ export class CommentsComponent{
         this.postService.getById(id).subscribe(value => this.post=value)
       }
 
-      this.postService.getCommentOfPost(this.post.id).subscribe(value => this.comments=value)
+      this.postService.getCommentOfPost(id).subscribe(value => this.comments=value)
 
     })
   }
