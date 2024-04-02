@@ -1,17 +1,12 @@
-.container {
+.container{
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  background-color: teal;
-  font-size: 25px;
+  justify-content: space-around;
   height: 50px;
+  background-color: teal;
 }
-
-.container a {
+.container a{
   text-decoration: none;
+  font-size: 25px;
   color: snow;
-}
-
-.container a[class='active'] {
-  color: #411717;
 }
