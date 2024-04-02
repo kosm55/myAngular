@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IUser} from "../../../interfaces";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../services/user.service";
+import {ActivatedRoute} from "@angular/router";
 import {NgIf} from "@angular/common";
 
 @Component({
@@ -13,21 +12,15 @@ import {NgIf} from "@angular/common";
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.css'
 })
-export class UserDetailsComponent {
+export class UserDetailsComponent implements OnInit{
   user: IUser
 
   constructor(
-    private activatedRoute:ActivatedRoute,
-    private router:Router,
-    private userService:UserService
-  ) {
-    this.activatedRoute.params.subscribe(({id})=>{
-      this.user= this.router.getCurrentNavigation()?.extras.state as IUser
+    private activatedRoute:ActivatedRoute
+  ) { }
 
-      if(!this.user){
-        this.userService.getById(id).subscribe(value => this.user=value)
-      }
-    })
-  }
+  ngOnInit(): void {
+        this.activatedRoute.data.subscribe(({userData})=> this.user=userData)
+    }
 
 }
