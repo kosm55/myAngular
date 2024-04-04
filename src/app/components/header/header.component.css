@@ -1,0 +1,21 @@
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 50px;
+  background-color: teal;
+  color: #e7ddea;
+  font-size: 25px;
+  font-family: sans-serif;
+  text-shadow:
+    1px 1px 0 #141415,
+    -1px -1px 0 #141415,
+    1px -1px 0 #141415,
+    -1px 1px 0 #141415;
+}
+.container a{
+  text-decoration: none;
+  color: snow;
+  padding: 0 5px;
+
+}
