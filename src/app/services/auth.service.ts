@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IAuth, ITokens} from "../interfaces";
-import {Observable, tap} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import {urls} from "../constants";
+import {IUser} from "../interfaces/user.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {urls} from "../constants";
 export class AuthService {
   private readonly _accessTokenKey='access'
   private readonly _refreshTokenKey='refresh'
+  private _authUserSubject= new BehaviorSubject<IUser>(null)
 
   constructor(private httpClient:HttpClient) { }
 
@@ -17,7 +19,26 @@ export class AuthService {
     return this.httpClient.post<ITokens>(urls.auth.login, user).pipe(
       tap(tokens=>{
         this._setTokens(tokens)
+        this.me().subscribe()
       })
+    )
+  }
+
+  register(user: IAuth): Observable<ITokens>{
+    return this.httpClient.post<ITokens>(urls.auth.register, user).pipe(
+      tap(tokens=>{
+        this._setTokens(tokens)
+      })
+    )
+  }
+  refresh(): Observable<ITokens>{
+    return this.httpClient.post<ITokens>(urls.auth.refresh, {refresh: this.getRefreshToken()}).pipe(
+      tap(tokens=> this._setTokens(tokens))
+    )
+  }
+  me():Observable<IUser>{
+    return this.httpClient.get<IUser>(urls.auth.me).pipe(
+      tap(user=> this.setAuthUser(user))
     )
   }
 
@@ -36,5 +57,12 @@ export class AuthService {
   deleteTokens():void{
     localStorage.removeItem(this._accessTokenKey)
     localStorage.removeItem(this._refreshTokenKey)
+  }
+
+  setAuthUser(data: IUser):void{
+    this._authUserSubject.next(data)
+  }
+  getAuthUser(): Observable<IUser>{
+    return this._authUserSubject.asObservable()
   }
 }

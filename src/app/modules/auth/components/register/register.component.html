@@ -1,0 +1,6 @@
+<form [formGroup]="form" class="formRegister">
+  <div *ngIf="error">Username already exist, create new</div>
+  <input type="text" placeholder="username" formControlName="username">
+  <input type="text" placeholder="password" formControlName="password">
+  <button (click)="register()">Register</button>
+</form>

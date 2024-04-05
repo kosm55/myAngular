@@ -1,14 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {AuthService} from "../../../../services";
 import {Router} from "@angular/router";
 
+import {AuthService} from "../../../../services";
+
+
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
-export class LoginComponent implements OnInit{
+export class RegisterComponent implements OnInit{
   form: FormGroup
   error: boolean
 
@@ -20,24 +22,21 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this._initForm()
+        this._initForm()
     }
- private _initForm(): void{
+
+  private _initForm(): void{
     this.form=this.fb.group({
       username:[''],
       password: ['']
     })
- }
-
-  login(): void {
-    // this.authService.login(this.form.value).subscribe(()=>{
-    //   this.router.navigate(['/cars'])
-    // })
-    this.authService.login(this.form.value).subscribe({
+  }
+  register() {
+    this.authService.register(this.form.value).subscribe({
       next: ()=>{
-          this.router.navigate(['/cars'])
+        this.router.navigate(['/login'])
         this.error=false
-        },
+      },
       error: ()=>{
         this.error=true
       }
